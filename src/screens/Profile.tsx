@@ -1,11 +1,9 @@
 import React, { FC, useState } from "react";
 import {
   Image,
-  Pressable,
   StyleSheet,
   Text,
   View,
-  ScrollView,
   TouchableHighlight,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -31,7 +29,6 @@ interface ProfileProps {
 
 const Profile: FC<ProfileProps> = ({ navigation }) => {
   const user = useSelector((s: any) => s.user);
-  const { total_anime } = useSelector((s: any) => s.DATA);
   const dispatch = useDispatch();
 
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -91,20 +88,11 @@ const Profile: FC<ProfileProps> = ({ navigation }) => {
             <Text
               style={[
                 globalStyles.text,
-                globalStyles.fontBold,
-                { fontSize: 15 },
-              ]}
-            >
-              {user.email}
-            </Text>
-            <Text
-              style={[
-                globalStyles.text,
                 globalStyles.fontMedium,
                 { fontSize: 15 },
               ]}
             >
-              Total Anime: {total_anime}
+              {user.email}
             </Text>
           </View>
         </View>

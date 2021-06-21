@@ -12,7 +12,7 @@ import {
 import axios from "axios";
 
 // icons
-import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
+import { Ionicons, Feather } from "@expo/vector-icons";
 
 // styles
 import { globalStyles, SPACING } from "../styles";
@@ -42,26 +42,34 @@ const Add: FC<AddProps> = ({ navigation }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [customError, setCustomError] = useState<boolean>(false);
   const [show, setShow] = useState<boolean>(false);
+  const [showClearBtn, setShowClearBtn] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   const DATAS = useSelector((s: any) => s.DATA);
 
   const searchAnime = async () => {
-    setLoading(true);
-    try {
-      const { data } = await axios.get(
-        `https://api.jikan.moe/v3/search/anime?q=${search + " "}&page=1`
-      );
-      setData([...data.results]);
+    if (search) {
+      setLoading(true);
+      try {
+        const { data } = await axios.get(
+          `https://api.jikan.moe/v3/search/anime?q=${search + " "}&page=1`
+        );
+        setData([...data.results]);
+        setCustomError(false);
+      } catch (err) {
+        setCustomError(true);
+      }
       setLoading(false);
-      setCustomError(false);
-    } catch (err) {
-      setLoading(false);
-      setCustomError(true);
     }
   };
 
-  const RenderItem = ({ item }: RenderItemProps) => {
+  const textChange = (text: string) => {
+    setSearch(text);
+    if (text.length > 0) setShowClearBtn(true);
+    else setShowClearBtn(false);
+  };
+
+  const RenderItem: FC<RenderItemProps> = ({ item }) => {
     return (
       <TouchableHighlight
         onPress={() =>
@@ -107,10 +115,10 @@ const Add: FC<AddProps> = ({ navigation }) => {
                     )
                   }
                 >
-                  <Ionicons name="add-circle-sharp" size={27} color="#fafafa" />
+                  <Feather name="plus-circle" size={25} color="#fafafa" />
                 </Pressable>
               ) : (
-                <FontAwesome5 name="check-circle" size={25} color="#fafafa" />
+                <Feather name="check-circle" size={25} color="#fafafa" />
               )}
             </View>
           </View>
@@ -151,16 +159,28 @@ const Add: FC<AddProps> = ({ navigation }) => {
           >
             search anime here!
           </Text>
-          <TextInput
-            style={[globalStyles.fontMedium, styles.input]}
-            onChangeText={(e) => setSearch(e)}
-            value={search}
-            placeholder="e.g. naruto"
-            placeholderTextColor="rgba(255,255,255,0.6)"
-            blurOnSubmit={true}
-            onSubmitEditing={searchAnime}
-            selectionColor="rgba(255,255,255,0.5)"
-          />
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={[globalStyles.fontMedium, styles.input]}
+              onChangeText={textChange}
+              value={search}
+              placeholder="e.g. naruto"
+              placeholderTextColor="rgba(255,255,255,0.6)"
+              blurOnSubmit={true}
+              onSubmitEditing={searchAnime}
+              selectionColor="rgba(255,255,255,0.5)"
+            />
+            {showClearBtn && (
+              <Pressable
+                onPress={() => {
+                  setSearch("");
+                  setShowClearBtn(false);
+                }}
+              >
+                <Feather name="x" size={22} color="#fafafa" />
+              </Pressable>
+            )}
+          </View>
         </View>
         {loading && (
           <View style={{ alignItems: "center", marginTop: 10 }}>
@@ -198,13 +218,19 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: SPACING,
   },
-  input: {
+  inputContainer: {
+    flexDirection: "row",
     backgroundColor: "#222831",
-    paddingHorizontal: SPACING,
-    color: "#fafafa",
+    alignItems: "center",
     borderRadius: SPACING,
+    overflow: "hidden",
+    paddingHorizontal: SPACING,
+  },
+  input: {
+    color: "#fafafa",
     height: 50,
     fontSize: 13,
+    flex: 1,
   },
   lists: {
     flexDirection: "row",

@@ -7,7 +7,7 @@ import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 
 const App: FC = () => {
-  axios.defaults.baseURL = "http://192.168.43.106:5001/api";
+  axios.defaults.baseURL = "http://localhost:5001/api";
 
   const [fontsLoaded] = useFonts({
     PoppinsBold: require("./assets/fonts/Poppins-Bold.ttf"),

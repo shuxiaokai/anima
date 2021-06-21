@@ -4,11 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
 // icons
-import {
-  AntDesign,
-  EvilIcons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 
 // styles
 import { globalStyles } from "../styles";
@@ -47,7 +43,7 @@ const Header: FC = () => {
           style={{ marginRight: 20 }}
           onPress={() => navigation.navigate("Add")}
         >
-          <EvilIcons name="search" size={30} color="#fafafa" />
+          <Feather name="search" size={22} color="#fafafa" />
         </TouchableHighlight>
 
         <TouchableHighlight
@@ -62,7 +58,7 @@ const Header: FC = () => {
         </TouchableHighlight>
 
         <TouchableHighlight onPress={logout}>
-          <AntDesign name="logout" size={20} color="#fafafa" />
+          <Feather name="log-out" size={22} color="#fafafa" />
         </TouchableHighlight>
       </View>
     </View>
