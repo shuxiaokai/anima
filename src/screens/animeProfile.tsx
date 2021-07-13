@@ -10,7 +10,6 @@ import {
   Dimensions,
 } from "react-native";
 import axios from "axios";
-import Clipboard from "expo-clipboard";
 
 // components
 import FlashLoading from "../components/flashLoading";
@@ -18,6 +17,7 @@ import Loading from "../components/loading";
 
 // lib
 import flashMessage from "../lib/flashMessage";
+import { copyToClipboard } from "../lib/clipboard";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
@@ -78,11 +78,6 @@ const AnimeProfile: FC<AnimeProfileProps> = ({ navigation, route }) => {
     })();
   }, [id]);
 
-  const copyToClipboard = () => {
-    Clipboard.setString(data.title);
-    flashMessage("copied");
-  };
-
   if (loading) {
     return (
       <View
@@ -133,7 +128,7 @@ const AnimeProfile: FC<AnimeProfileProps> = ({ navigation, route }) => {
               </TouchableHighlight>
             )}
 
-            <TouchableHighlight onPress={copyToClipboard}>
+            <TouchableHighlight onPress={() => copyToClipboard(data.title)}>
               <Ionicons name="md-copy" size={26} color="#fafafa" />
             </TouchableHighlight>
           </View>

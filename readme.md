@@ -8,7 +8,7 @@ Anima is a Anime Watchlist App. Make a list of anime to watch.
 
 [Check out the app](https://github.com/devyuji/anima/releases)
 
-login with these email and password
+login with these email and password to try.
 
 - email - test@email.com
 - password - test123

@@ -9,10 +9,10 @@ import { delete_date } from "../redux/action";
 
 // lib
 import flashMessage from "../lib/flashMessage";
+import { copyToClipboard } from "../lib/clipboard";
 
 // styles
 import { globalStyles } from "../styles";
-import ExpoClipboard from "expo-clipboard";
 
 interface HomeOptionProps {
   options: { id: string; title: string };
@@ -32,11 +32,6 @@ const HomeOption: FC<HomeOptionProps> = ({ options, onDimiss }) => {
     } catch (err) {
       flashMessage("Something went wrong while deleting!");
     }
-  };
-
-  const copyToClipboard = (name: string) => {
-    ExpoClipboard.setString(name);
-    flashMessage("copied");
   };
 
   return (

@@ -1,0 +1,2 @@
+https://anima-list.herokuapp.com/
+http://192.168.43.106:5001

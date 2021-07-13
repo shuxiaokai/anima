@@ -7,7 +7,7 @@ import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 
 const App: FC = () => {
-  axios.defaults.baseURL = "http://localhost:5001/api";
+  axios.defaults.baseURL = "https://anima-list.herokuapp.com/api";
 
   const [fontsLoaded] = useFonts({
     PoppinsBold: require("./assets/fonts/Poppins-Bold.ttf"),
